@@ -3,48 +3,72 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Smart Traffic System – PriorityFlow</title>
+  <title>PriorityFlow - Smart Traffic System</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
   <header>
-    <h1>🚦 PriorityFlow: Smart Traffic System</h1>
+    <h1>PriorityFlow: Smart Traffic Management System</h1>
   </header>
 
-  <div class="emergency-banner" id="emergencyBanner">🚨 Emergency Detected – Prioritizing Lane...</div>
+  <main>
+    <div id="emergencyBanner">🚨 Emergency Vehicle Approaching! Prioritizing Lane...</div>
 
-  <div class="intersection">
-    <div class="lane north" id="lane-north">
-      <div class="light" id="light-north"></div>
-      <p>North</p>
-    </div>
-    <div class="lane south" id="lane-south">
-      <div class="light" id="light-south"></div>
-      <p>South</p>
-    </div>
-    <div class="lane east" id="lane-east">
-      <div class="light" id="light-east"></div>
-      <p>East</p>
-    </div>
-    <div class="lane west" id="lane-west">
-      <div class="light" id="light-west"></div>
-      <p>West</p>
-    </div>
-  </div>
+    <!-- 🚦 Signal Display -->
+    <section id="signals">
+      <div class="lane" id="lane-north">
+        <div class="signal red" id="light-north"></div>
+        <p>North</p>
+      </div>
+      <div class="lane" id="lane-east">
+        <div class="signal red" id="light-east"></div>
+        <p>East</p>
+      </div>
+      <div class="lane" id="lane-south">
+        <div class="signal red" id="light-south"></div>
+        <p>South</p>
+      </div>
+      <div class="lane" id="lane-west">
+        <div class="signal red" id="light-west"></div>
+        <p>West</p>
+      </div>
+    </section>
 
-  <div class="controls">
-    <h2>🚑 Emergency Vehicle Detection</h2>
-    <button onclick="simulateEmergency('north')">From North</button>
-    <button onclick="simulateEmergency('south')">From South</button>
-    <button onclick="simulateEmergency('east')">From East</button>
-    <button onclick="simulateEmergency('west')">From West</button>
-    <button class="resume" onclick="startNormalCycle()">Resume Normal Traffic</button>
-  </div>
+    <!-- 🗺️ Map -->
+    <div id="map" style="height: 400px;"></div>
+
+    <!-- 📊 Live Dashboard -->
+    <section id="dashboard">
+      <h2>📊 Live Dashboard</h2>
+      <div class="dashboard-grid">
+        <div>🚦 Current Green Light: <span id="currentGreen">N/A</span></div>
+        <div>🚑 Emergency Status: <span id="emergencyStatus">Inactive</span></div>
+        <div>⏱️ ETA to Intersection: <span id="eta">N/A</span></div>
+        <div>🛣️ Vehicle Count (Simulated): <span id="vehicleCount">0</span></div>
+      </div>
+    </section>
+
+    <!-- 🧑‍💼 Admin Control Panel -->
+    <section id="admin-panel">
+      <h2>🧑‍💼 Admin Controls</h2>
+      <div class="admin-controls">
+        <button onclick="manualSetLight('north')">North Green</button>
+        <button onclick="manualSetLight('east')">East Green</button>
+        <button onclick="manualSetLight('south')">South Green</button>
+        <button onclick="manualSetLight('west')">West Green</button>
+        <button onclick="toggleEmergency()">Toggle Emergency Mode</button>
+        <button onclick="resetSystem()">Reset System</button>
+      </div>
+    </section>
+  </main>
 
   <footer>
-    <p>&copy; 2025 PriorityFlow Traffic Tech | Demo Simulation</p>
+    <p>&copy; 2025 PriorityFlow. All rights reserved.</p>
   </footer>
 
   <script src="script.js"></script>
+  <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
 </body>
 </html>
